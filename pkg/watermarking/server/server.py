@@ -21,7 +21,7 @@ class Transformer(service_pb2_grpc.TransformationServicer):
         image = Image.new('RGBA', (x, y), color=(255, 255, 255, 0))
         d = ImageDraw.Draw(image)
         d.text((10, 10), text, fill=(0, 0, 0, 255))
-        image.save('test.png')
+        # image.save('test.png')
         bar = io.BytesIO()
         image.save(bar, format=image.format)
         bar = bar.getvalue()
