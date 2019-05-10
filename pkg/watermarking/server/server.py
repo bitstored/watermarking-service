@@ -25,7 +25,7 @@ class Transformer(service_pb2_grpc.TransformationServicer):
         bar = io.BytesIO()
         image.save(bar, format=image.format)
         bar = bar.getvalue()
-        return service_pb2.ToImageResponse(bar, x, y)
+        return service_pb2.ToImageResponse("", 0, 0)
 
 
 def serve():

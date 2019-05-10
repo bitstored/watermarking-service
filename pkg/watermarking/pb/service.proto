@@ -1,0 +1,19 @@
+
+syntax = "proto3";
+
+package image_service;
+option go_package="pb";
+
+service Transformation{
+    rpc ToImage(ToImageRequest) returns (ToImageResponse);
+}
+
+message ToImageRequest {
+    string text = 1;
+}
+
+message ToImageResponse{
+    bytes image = 1;
+    int32 x = 2;
+    int32 y = 3;
+}
