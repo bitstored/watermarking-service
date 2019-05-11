@@ -2,7 +2,7 @@
 syntax = "proto3";
 
 package image_service;
-option go_package="pb";
+option go_package="client";
 
 service Transformation{
     rpc ToImage(ToImageRequest) returns (ToImageResponse);

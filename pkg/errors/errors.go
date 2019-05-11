@@ -20,6 +20,7 @@ const (
 	KindOverflow                         // buffer owerflow
 	KindMalformedStructure
 	KindInvalidArgument
+	KindConnectionFailed
 )
 
 func NewError(kind Kind, msg string) *Err {
@@ -63,6 +64,8 @@ func (e *Err) KindMsg() string {
 		return "malformed buffer structure"
 	case KindInvalidArgument:
 		return "invalid argument"
+	case KindConnectionFailed:
+		return "connection failed"
 	default:
 		return "something is wrong"
 	}

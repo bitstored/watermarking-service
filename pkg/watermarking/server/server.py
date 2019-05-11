@@ -1,5 +1,5 @@
 #! /usr/bin/python
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
 import service_pb2
 import service_pb2_grpc
@@ -12,17 +12,20 @@ import io
 
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
-LETTER_SIZE = 10
+LETTER_SIZE = 20
 
 
 class Transformer(service_pb2_grpc.TransformationServicer):
     def ToImage(self, request, context):
         text = request.text
-        y = LETTER_SIZE+10
+        y = int(LETTER_SIZE * 3.5)
         x = len(text) * LETTER_SIZE
         image = Image.new('RGBA', (x, y), color=(255, 255, 255, 0))
         d = ImageDraw.Draw(image)
-        d.text((LETTER_SIZE, LETTER_SIZE), text, fill=(0, 0, 0, 255))
+        fnt = ImageFont.truetype('fonts/DejaVuSans.ttf', size=LETTER_SIZE)
+
+        d.text((0, 0), text, font=fnt, fill=(0, 0, 0, 255))
+        image = image.rotate(10)
         image.save('test_data/test.png')
         bytesarray = io.BytesIO()
         image.save(bytesarray, format="PNG")
