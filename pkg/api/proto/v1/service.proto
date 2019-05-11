@@ -4,3 +4,60 @@ package watermarking_service;
 option go_package="pb";
 
 import "google/api/annotations.proto";
+
+service Watermarking {
+    rpc EncodeMessage(EncodeMessageRequest) returns (EncodeMessageResponse){
+        option (google.api.http) = {
+            post: "/watermarking/api/v1/stegano/encode"
+            body: "*"
+        };
+    }
+    rpc DecodeMessage(DecodeMessageRequest) returns (DecodeMessageResponse){
+        option (google.api.http) = {
+            post: "/watermarking/api/v1/stegano/decode"
+            body: "*"
+        };
+    }
+    rpc WatermarkImageWithText(WatermarkImageWithTextRequest) returns (WatermarkImageWithTextResponse){
+        option (google.api.http) = {
+            post: "/watermarking/api/v1/image/text"
+            body: "*"
+        };
+    }
+    rpc WatermarkImageWithImage(WatermarkImageWithImageRequest) returns (WatermarkImageWithImageResponse){
+        option (google.api.http) = {
+            post: "/watermarking/api/v1/image/image"
+            body: "*"
+        };
+    }
+}
+
+message EncodeMessageRequest {
+    bytes image = 1;
+    bytes text = 2;
+    bool full_message = 3;
+}
+message EncodeMessageResponse {
+    bytes image = 1;
+}
+message DecodeMessageRequest {
+    bytes image = 1;
+}
+message DecodeMessageResponse {
+    bytes image = 1;
+    bytes text = 2;
+}
+message WatermarkImageWithTextRequest{
+    bytes image = 1;
+    string watermark = 2;
+}
+message WatermarkImageWithTextResponse{
+    bytes image = 1;
+}
+message WatermarkImageWithImageRequest{
+    bytes image = 1;
+    bytes watermark = 2;
+}
+message WatermarkImageWithImageResponse{
+    bytes image = 1;
+}

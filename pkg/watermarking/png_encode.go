@@ -14,28 +14,32 @@ import (
 	"github.com/bitstored/watermarking-service/pkg/watermarking/client"
 )
 
-func WatermarkImageWithImage(ctx context.Context, src *image.RGBA, watermarkImage *image.RGBA) (*image.RGBA, *errors.Err) {
+func WatermarkImageWithImage(ctx context.Context, src image.Image, watermarkImage image.Image) (image.Image, *errors.Err) {
 	if src == nil {
 		return nil, errors.NewError(errors.KindEmptyImage, "image can't be empty")
 	}
 	if watermarkImage == nil {
 		return nil, errors.NewError(errors.KindEmptyImage, "watermark image  can't be empty")
 	}
-	out, err := watermark(ctx, src, watermarkImage)
+
+	src1 := imageToRGBA(src)
+	watermarkImage1 := imageToRGBA(watermarkImage)
+
+	out, err := watermark(ctx, src1, watermarkImage1)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func WatermarkImageWithText(ctx context.Context, src image.Image, watermarkText string) (*image.RGBA, *errors.Err) {
+func WatermarkImageWithText(ctx context.Context, src image.Image, watermarkText string) (image.Image, *errors.Err) {
 	img, err := createImage(ctx, watermarkText)
 
 	if err != nil {
 		return nil, err
 	}
 
-	return WatermarkImageWithImage(ctx, imageToRGBA(src), img)
+	return WatermarkImageWithImage(ctx, src, img)
 }
 
 func createImage(ctx context.Context, text string) (*image.RGBA, *errors.Err) {

@@ -1,0 +1,41 @@
+apiVersion: "extensions/v1beta1"
+kind: "Deployment"
+metadata:
+  name: "watermarking-service"
+  namespace: "default"
+  labels:
+    app: "watermarking-service"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "watermarking-service"
+  template:
+    metadata:
+      labels:
+        app: "watermarking-service"
+    spec:
+      containers:
+        - name: "watermarking-service-latest"
+          image: "gcr.io/licenta-diana/watermarking-service"
+          imagePullPolicy: "Always"
+---
+apiVersion: "autoscaling/v2beta1"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "watermarking-service-hpa"
+  namespace: "default"
+  labels:
+    app: "watermarking-service"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "watermarking-service"
+    apiVersion: "apps/v1beta1"
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+    - type: "Resource"
+      resource:
+        name: "cpu"
+        targetAverageUtilization: 80
