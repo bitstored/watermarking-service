@@ -93,11 +93,21 @@ func min(a, b int) int {
 	}
 	return b
 }
+
 func setBit(a *uint32, b uint32, cnt uint) {
-	mask := b & (1 << cnt)
+	mask := uint32(1 << cnt)
 	if b&mask == 0 {
 		*a = (*a) & (255 - 1)
 	} else {
 		*a = (*a) | 1
+	}
+}
+
+func setBitN(a *uint32, b uint32, n uint) {
+	mask := uint32(1 << n)
+	if b%2 == 0 {
+		*a = (*a) & ^mask
+	} else {
+		*a = (*a) | mask
 	}
 }

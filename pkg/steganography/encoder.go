@@ -74,7 +74,7 @@ func encodeBytes(img *image.RGBA, data []byte) (*image.RGBA, *errors.Err) {
 	dx := b.Dx()
 	dy := b.Dy()
 	for index := uint(0); index < count; index += 4 {
-		x, y := getCoordinatesFromIndex(dx, dy, int(index))
+		x, y := getCoordinatesFromIndex(dx, dy, int(index/4))
 		r, g, b, a := img.At(x, y).RGBA()
 		d := data[index/8]
 		setBit(&r, uint32(d), index%8)

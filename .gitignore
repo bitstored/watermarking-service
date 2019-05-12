@@ -40,3 +40,5 @@ contrib/registry/data
 contrib/rpm/*.tar.gz
 src
 gnupg
+scripts/localhost.*
+bits_wm/

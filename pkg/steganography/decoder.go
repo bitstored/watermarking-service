@@ -46,7 +46,7 @@ func decodeBytes(img *image.RGBA) ([]byte, *errors.Err) {
 	b := img.Bounds()
 	dx := b.Dx()
 	dy := b.Dy()
-	out := make([]byte, (dx*2+dy*2-4)/4)
+	out := make([]byte, (dx*2 + dy*2 - 4))
 	for index := uint(0); ; index += 4 {
 		x, y := getCoordinatesFromIndex(dx, dy, int(index/4))
 		if x == -1 && y == -1 {
@@ -54,10 +54,10 @@ func decodeBytes(img *image.RGBA) ([]byte, *errors.Err) {
 		}
 		r, g, b, a := img.At(x, y).RGBA()
 		var aux uint32
-		setBit(&aux, r, index%8)
-		setBit(&aux, g, index%8+1)
-		setBit(&aux, b, index%8+2)
-		setBit(&aux, a, index%8+3)
+		setBitN(&aux, r, index%8)
+		setBitN(&aux, g, index%8+1)
+		setBitN(&aux, b, index%8+2)
+		setBitN(&aux, a, index%8+3)
 		out[index/8] |= byte(aux)
 	}
 	return out, nil

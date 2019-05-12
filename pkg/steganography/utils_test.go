@@ -84,8 +84,7 @@ func TestGetCoordinatesFromIndex(t *testing.T) {
 			x, y := getCoordinatesFromIndex(tc.Dx, tc.Dy, tc.Index)
 			require.Equal(t, tc.X, x)
 			require.Equal(t, tc.Y, y)
-			indx, offset := getIndexFromCoordinates(tc.Dx, tc.Dy, x, y)
-			require.Equal(t, tc.Index, indx*8+offset)
+
 		})
 	}
 }
