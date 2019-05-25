@@ -14,6 +14,8 @@ import (
 	"github.com/bitstored/watermarking-service/pkg/watermarking/client"
 )
 
+const gRPCPortImgTransform = "localhost:50051"
+
 func WatermarkImageWithImage(ctx context.Context, src image.Image, watermarkImage image.Image) (image.Image, *errors.Err) {
 	if src == nil {
 		return nil, errors.NewError(errors.KindEmptyImage, "image can't be empty")
@@ -43,7 +45,7 @@ func WatermarkImageWithText(ctx context.Context, src image.Image, watermarkText 
 }
 
 func createImage(ctx context.Context, text string) (*image.RGBA, *errors.Err) {
-	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
+	conn, err := grpc.Dial(gRPCPortImgTransform, grpc.WithInsecure())
 	if err != nil {
 		return nil, errors.NewError(errors.KindConnectionFailed, err.Error())
 	}
