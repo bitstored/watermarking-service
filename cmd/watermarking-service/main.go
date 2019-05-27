@@ -4,9 +4,6 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"github.com/bitstored/watermarking-service/pb"
-	"github.com/bitstored/watermarking-service/pkg/server"
-	"github.com/bitstored/watermarking-service/pkg/service"
 	"log"
 	"net"
 	"net/http"
@@ -15,6 +12,9 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/bitstored/watermarking-service/pb"
+	"github.com/bitstored/watermarking-service/pkg/server"
+	"github.com/bitstored/watermarking-service/pkg/service"
 	"github.com/cenkalti/backoff"
 	grpc_prometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
 	"github.com/prometheus/client_golang/prometheus"
@@ -24,7 +24,7 @@ import (
 )
 
 const (
-	ServiceName = "authentication"
+	ServiceName = "watermarking"
 )
 
 var (
@@ -102,7 +102,7 @@ func main() {
 			log.Fatalf("Unable to start a http server - %s", err)
 		}
 	}()
-	fmt.Printf("Compression server listening on  %s for gRPC\nCompression server listening on on %s for http\n", *grpcAddr, *httpAddr)
+	fmt.Printf("Watermarking server listening on  %s for gRPC\nWatermarking server listening on on %s for http\n", *grpcAddr, *httpAddr)
 
 	sigs := make(chan os.Signal, 1)
 	done := make(chan bool, 1)

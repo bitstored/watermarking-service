@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+
 	"github.com/bitstored/watermarking-service/pb"
 	"github.com/bitstored/watermarking-service/pkg/service"
 	"google.golang.org/grpc/codes"
