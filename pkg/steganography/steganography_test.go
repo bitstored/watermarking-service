@@ -37,9 +37,15 @@ func TestEncode(t *testing.T) {
 }
 
 func TestDecode(t *testing.T) {
-	msg := []byte("ana are mere")
+	msg := []byte("Diana are mere")
 	ctx := context.Background()
-	in := image.NewRGBA(image.Rect(0, 0, 100, 100))
+	in := image.NewRGBA(image.Rect(0, 0, 123, 100))
+	bounds := in.Bounds()
+	for i := 0; i < bounds.Dx(); i++ {
+		for j := 0; j < bounds.Dy(); j++ {
+			in.Set(i, j, color.RGBA{uint8(i), uint8(j), uint8(i), 255})
+		}
+	}
 	out, err := EncodeImage(ctx, in, msg, false)
 	require.NoError(t, err.Error())
 	_, message, err := DecodeImage(ctx, out)

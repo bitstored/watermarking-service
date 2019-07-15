@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/bitstored/watermarking-service/pb"
 	"github.com/bitstored/watermarking-service/pkg/service"
@@ -19,6 +20,7 @@ func NewServer(s *service.Service) *Server {
 
 func (s *Server) EncodeMessage(ctx context.Context, in *pb.EncodeMessageRequest) (*pb.EncodeMessageResponse, error) {
 	img := in.GetImage()
+	fmt.Println("Hey, am here an plm \n")
 	if img == nil || len(img) == 0 {
 		return nil, status.Error(codes.InvalidArgument, "image is empty")
 	}

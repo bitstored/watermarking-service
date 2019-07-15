@@ -32,10 +32,13 @@ var (
 func EncodeImage(ctx context.Context, img image.Image, text []byte, fullMessage bool) (image.Image, *errors.Err) {
 
 	if img == nil {
+		panic(errors.NewError(errors.KindEmptyImage, "Emage ca'nt be empty"))
 		return nil, errors.NewError(errors.KindEmptyImage, "Emage ca'nt be empty")
 	}
 
 	if text == nil || len(text) == 0 {
+		panic(errors.NewError(errors.KindInvalidArgument, "Text for watermarking can't be empty"))
+
 		return nil, errors.NewError(errors.KindInvalidArgument, "Text for watermarking can't be empty")
 	}
 
@@ -52,6 +55,7 @@ func EncodeImage(ctx context.Context, img image.Image, text []byte, fullMessage 
 	out, err := encodeBytes(out, data)
 
 	if err != nil && err.Kind != errors.KindOverflow {
+		panic(err)
 		return nil, err
 	}
 
